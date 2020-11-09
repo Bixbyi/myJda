@@ -10,7 +10,7 @@ public class Bot extends ListenerAdapter
 {
     public static void main(String[] args) throws LoginException
     {
-        String token = "토큰";
+        String token = "token";
 
 
         JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
@@ -31,6 +31,7 @@ public class Bot extends ListenerAdapter
         }
         if (msg.getContentRaw().charAt(0) == ',' /*접두사*/){
             String[] content =  msg.getContentRaw().substring(1).split("");
+            MessageChannel channel = event.getChannel();
             if (
                     /*명령어 (Ping!)*/
                     content[0].equalsIgnoreCase("ping")
@@ -42,7 +43,7 @@ public class Bot extends ListenerAdapter
                             || content[0].equalsIgnoreCase("ㅔㅑㅜㅎ")
                             || content[0].equalsIgnoreCase("vld")
             ) {
-                MessageChannel channel = event.getChannel();
+
                 long time = System.currentTimeMillis();
                 /*대답*/
                 channel.sendMessage("퐁!")
@@ -50,7 +51,12 @@ public class Bot extends ListenerAdapter
                             /*수정.*/
                             response.editMessageFormat("퐁!: %d ms", System.currentTimeMillis() - time).queue();
                         });
+
             }
+            else{
+                channel.sendMessage("없는 명령어입니다");
+            }
+
         }
     }
 }
