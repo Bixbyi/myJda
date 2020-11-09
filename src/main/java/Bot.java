@@ -10,7 +10,7 @@ public class Bot extends ListenerAdapter
 {
     public static void main(String[] args) throws LoginException
     {
-        String token = "토큰";
+        String token = "NzYzNjYzNTEzODY4NTY2NTQw.X36_EQ.AzbWps5NplvCUZ3B1h5SU18_qQQ";
 
         // args[0] should be the token
         // We only need 2 intents in this bot. We only respond to messages in guilds and private channels.
