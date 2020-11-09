@@ -10,11 +10,9 @@ public class Bot extends ListenerAdapter
 {
     public static void main(String[] args) throws LoginException
     {
-        String token = "NzYzNjYzNTEzODY4NTY2NTQw.X36_EQ.AzbWps5NplvCUZ3B1h5SU18_qQQ";
+        String token = "token";
 
-        // args[0] should be the token
-        // We only need 2 intents in this bot. We only respond to messages in guilds and private channels.
-        // All other events will be disabled.
+
         JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .addEventListeners(new Bot())
                 .setActivity(Activity.playing("Type !ping"))
@@ -26,14 +24,15 @@ public class Bot extends ListenerAdapter
     public void onMessageReceived(MessageReceivedEvent event)
     {
         User user = event.getAuthor();
-        TextChannel tc = event.getTextChannel();
+        //TextChannel tc = event.getTextChannel();
         Message msg = event.getMessage();
         if (user.isBot()){
             return;
         }
-        if (msg.getContentRaw().charAt(0) == ','){
+        if (msg.getContentRaw().charAt(0) == ',' /*접두사*/){
             String[] content =  msg.getContentRaw().substring(1).split("");
             if (
+                    /*명령어 (Ping!)*/
                     content[0].equalsIgnoreCase("ping")
                             || content[0].equalsIgnoreCase("핑")
                             || content[0].equalsIgnoreCase("ㅍ")
@@ -45,8 +44,10 @@ public class Bot extends ListenerAdapter
             ) {
                 MessageChannel channel = event.getChannel();
                 long time = System.currentTimeMillis();
-                channel.sendMessage("퐁!") /* > RestAction<Message> */
-                        .queue(response /* => Message */ -> {
+                /*대답*/
+                channel.sendMessage("퐁!")
+                        .queue(response -> {
+                            /*수정*/
                             response.editMessageFormat("퐁!: %d ms", System.currentTimeMillis() - time).queue();
                         });
             }
