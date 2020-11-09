@@ -1,0 +1,54 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+import javax.security.auth.login.LoginException;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+
+public class Bot extends ListenerAdapter {
+    public Bot() {
+    }
+
+    public static void main(String[] args) throws LoginException {
+        String token = "token";
+        JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, new GatewayIntent[]{GatewayIntent.DIRECT_MESSAGES}).addEventListeners(new Object[]{new Bot()}).setActivity(Activity.playing("<help")).build();
+        System.out.print("Login 성공!");
+    }
+
+    public void onMessageReceived(MessageReceivedEvent event) {
+        User user = event.getAuthor();
+        Message msg = event.getMessage();
+        if (!user.isBot()) {
+            if (msg.getContentRaw().charAt(0) == '<') {
+                String[] content = msg.getContentRaw().substring(1).split("");
+                MessageChannel channel = event.getChannel();
+                EmbedBuilder eb = new EmbedBuilder();
+                if (content[0].equalsIgnoreCase("ping") || content[0].equalsIgnoreCase("핑") || content[0].equalsIgnoreCase("ㅍ") || content[0].equalsIgnoreCase("p") || content[0].equalsIgnoreCase("v") || content[0].equalsIgnoreCase("ㅔ") || content[0].equalsIgnoreCase("ㅔㅑㅜㅎ") || content[0].equalsIgnoreCase("vld")) {
+                    long time = System.currentTimeMillis();
+                    channel.sendMessage("퐁!").queue((response) -> {
+                        response.editMessageFormat("퐁!: %d ms", new Object[]{System.currentTimeMillis() - time}).queue();
+                    });
+                }
+
+                if (content[0].equalsIgnoreCase("help") || content[0].equalsIgnoreCase("도움") || content[0].equalsIgnoreCase("ㄷ") || content[0].equalsIgnoreCase("h") || content[0].equalsIgnoreCase("e") || content[0].equalsIgnoreCase("ㅗ") || content[0].equalsIgnoreCase("ㅗ디ㅔ") || content[0].equalsIgnoreCase("ehdna")) {
+                    eb.setTitle("명령어");
+                    eb.setColor(14357080);
+                    eb.setDescription("접두사 : <");
+                    eb.addField("ping", "하는 방법: <ping", false);
+                    eb.setFooter(user.getName(), user.getAvatarUrl());
+                    channel.sendMessage(eb.build()).queue();
+                }
+            }
+
+        }
+    }
+}
