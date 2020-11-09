@@ -69,8 +69,8 @@ public class Bot extends ListenerAdapter
             ){
                 eb.setTitle("명령어");
                 eb.setColor(0xdb1258);
-                eb.setDescription("알라라라");
-                eb.addField("<ping", "하는 방법: <ping", false);
+                eb.setDescription("접두사 : <");
+                eb.addField("ping", "하는 방법: <ping", false);
                 eb.setFooter(user.getName(), user.getAvatarUrl());
 
                 channel.sendMessage(eb.build()).queue();
