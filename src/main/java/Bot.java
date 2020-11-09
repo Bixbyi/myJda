@@ -47,7 +47,7 @@ public class Bot extends ListenerAdapter
                 /*대답*/
                 channel.sendMessage("퐁!")
                         .queue(response -> {
-                            /*수정*/
+                            /*수정.*/
                             response.editMessageFormat("퐁!: %d ms", System.currentTimeMillis() - time).queue();
                         });
             }
