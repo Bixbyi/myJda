@@ -1,9 +1,11 @@
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
+import java.awt.Color;
 import javax.security.auth.login.LoginException;
 
 public class Bot extends ListenerAdapter
@@ -15,7 +17,7 @@ public class Bot extends ListenerAdapter
 
         JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .addEventListeners(new Bot())
-                .setActivity(Activity.playing("Type !ping"))
+                .setActivity(Activity.playing("<help"))
                 .build();
         System.out.print("Login 성공!");
     }
@@ -29,9 +31,10 @@ public class Bot extends ListenerAdapter
         if (user.isBot()){
             return;
         }
-        if (msg.getContentRaw().charAt(0) == ',' /*접두사*/){
+        if (msg.getContentRaw().charAt(0) == '<' /*접두사*/){
             String[] content =  msg.getContentRaw().substring(1).split("");
             MessageChannel channel = event.getChannel();
+            EmbedBuilder eb = new EmbedBuilder();
             if (
                     /*명령어 (Ping!)*/
                     content[0].equalsIgnoreCase("ping")
@@ -53,8 +56,24 @@ public class Bot extends ListenerAdapter
                         });
 
             }
-            else{
-                channel.sendMessage("없는 명령어입니다");
+            if (
+                    /*명령어 (Help!)*/
+                    content[0].equalsIgnoreCase("help")
+                            ||content[0].equalsIgnoreCase("도움")
+                            ||content[0].equalsIgnoreCase("ㄷ")
+                            ||content[0].equalsIgnoreCase("h")
+                            ||content[0].equalsIgnoreCase("e")
+                            ||content[0].equalsIgnoreCase("ㅗ")
+                            ||content[0].equalsIgnoreCase("ㅗ디ㅔ")
+                            ||content[0].equalsIgnoreCase("ehdna")
+            ){
+                eb.setTitle("명령어");
+                eb.setColor(0xdb1258);
+                eb.setDescription("알라라라");
+                eb.addField("<ping", "하는 방법: <ping", false);
+                eb.setFooter(user.getName(), user.getAvatarUrl());
+
+                channel.sendMessage(eb.build()).queue();
             }
 
         }
