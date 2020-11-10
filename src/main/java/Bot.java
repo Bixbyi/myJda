@@ -5,13 +5,15 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-import java.awt.Color;
+
 import javax.security.auth.login.LoginException;
+import java.util.Random;
 
 public class Bot extends ListenerAdapter
 {
     public static void main(String[] args) throws LoginException
     {
+
         String token = "token";
 
 
@@ -19,6 +21,7 @@ public class Bot extends ListenerAdapter
                 .addEventListeners(new Bot())
                 .setActivity(Activity.playing("<help"))
                 .build();
+
         System.out.print("Login 성공!");
     }
 
@@ -71,8 +74,27 @@ public class Bot extends ListenerAdapter
                 eb.setColor(0xdb1258);
                 eb.setDescription("접두사 : <");
                 eb.addField("ping", "하는 방법: <ping", false);
+                eb.addField("dice", "하는방법: <dice",false);
                 eb.setFooter(user.getName(), user.getAvatarUrl());
 
+                channel.sendMessage(eb.build()).queue();
+            }
+            if (
+                    content[0].equalsIgnoreCase("dice")
+                            ||content[0].equalsIgnoreCase("주사위")
+                            ||content[0].equalsIgnoreCase("ㅈ")
+                            ||content[0].equalsIgnoreCase("d")
+                            ||content[0].equalsIgnoreCase("w")
+                            ||content[0].equalsIgnoreCase("ㅇ")
+                            ||content[0].equalsIgnoreCase("얓ㄷ")
+                            ||content[0].equalsIgnoreCase("wntkdnl")
+            ){
+                Random random = new Random();
+
+                int diceNumber = random.nextInt(7);
+                eb.setTitle("빠바바ㅏ바바");
+                eb.setColor(0x000000);
+                eb.addField("주사위의 값은", ""+diceNumber,false);
                 channel.sendMessage(eb.build()).queue();
             }
 
