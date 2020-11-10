@@ -91,7 +91,8 @@ public class Bot extends ListenerAdapter
             ){
                 Random random = new Random();
 
-                int diceNumber = random.nextInt(7);
+                int diceNumber = random.nextInt(6)+1;
+
                 eb.setTitle("빠바바ㅏ바바");
                 eb.setColor(0x000000);
                 eb.addField("주사위의 값은", ""+diceNumber,false);
